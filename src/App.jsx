@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  ember:   "#1E1208",
-  coal:    "#2E1A0A",
-  coal2:   "#3D2410",
+  ember:   "#120A04",
+  coal:    "#241208",
+  coal2:   "#3A1E0C",
   flame:   "#FF7A2F",
   flameD:  "#CC5A18",
-  chalk:   "#FFF0E6",
-  chalkD:  "#C8A888",
-  chalkDD: "#8A6A4A",
+  chalk:   "#FFF4EC",
+  chalkD:  "#D4AA88",
+  chalkDD: "#9A7A5A",
   glow:    "rgba(255,122,47,0.12)",
   glowMd:  "rgba(255,122,47,0.22)",
   success: "#4ECB8D",
@@ -18,16 +18,22 @@ const C = {
 };
 
 const LISTINGS = [
-  { id:1,  x:44, y:36, type:"object", cat:"Creative",    title:"Vintage film camera",     user:"Maya K.",    avatar:"M", circle:3, available:true,  desc:"35mm Olympus OM-1, fully working. One roll of Kodak Gold included. Handle with love.",                            offer:"Open to offers — surprise me",    time:"2h ago",  dist:"0.3mi", img:"📷" },
-  { id:2,  x:62, y:53, type:"skill",  cat:"Music",       title:"Guitar lessons",           user:"Tom R.",     avatar:"T", circle:2, available:true,  desc:"10 years playing, acoustic or electric. Beginners very welcome. Weekends work best.",                            offer:"Borrow something of mine",        time:"5h ago",  dist:"0.7mi", img:"🎸" },
-  { id:3,  x:27, y:59, type:"object", cat:"Kitchen",     title:"Bread proving basket",     user:"Priya S.",   avatar:"P", circle:4, available:false, desc:"Lined banneton + dutch oven. Barely used. Perfect if you're getting into sourdough.",                             offer:"Skills or objects welcome",       time:"1d ago",  dist:"0.4mi", img:"🍞" },
-  { id:4,  x:73, y:27, type:"object", cat:"Sport",       title:"Full ski set",             user:"Leon B.",    avatar:"L", circle:1, available:true,  desc:"Boots UK 10, 170cm skis, poles. Collect from Hackney. Available outside ski season.",                           offer:"Something useful",                time:"2d ago",  dist:"1.1mi", img:"⛷️" },
-  { id:5,  x:19, y:33, type:"skill",  cat:"Writing",     title:"Copywriting & editing",    user:"Sal O.",     avatar:"S", circle:3, available:true,  desc:"10 years in publishing. CV reviews, pitch decks, creative writing feedback — all welcome.",                     offer:"Trade a skill",                   time:"3d ago",  dist:"0.5mi", img:"✍️" },
-  { id:6,  x:55, y:71, type:"object", cat:"Creative",    title:"Sewing machine",           user:"Jo W.",      avatar:"J", circle:2, available:true,  desc:"Singer Heavy Duty 4432. Perfect for clothes, repairs or upholstery. I'll show you the basics.",                  offer:"Open to anything",                time:"4d ago",  dist:"0.6mi", img:"🧵" },
-  { id:7,  x:35, y:77, type:"skill",  cat:"Sport",       title:"Bike repair",              user:"Rafi M.",    avatar:"R", circle:5, available:true,  desc:"Can fix most things — brakes, gears, punctures, wheel truing. Bring it round any evening.",                    offer:"Help me with something",          time:"5d ago",  dist:"0.9mi", img:"🔧" },
-  { id:8,  x:80, y:62, type:"object", cat:"Creative",    title:"Darkroom enlarger",        user:"Chen W.",    avatar:"C", circle:3, available:true,  desc:"Durst M605. Full analogue setup. For the serious film photographer. Collect in person.",                         offer:"Teach me something creative",     time:"6h ago",  dist:"0.8mi", img:"🔭" },
-  { id:9,  x:50, y:20, type:"skill",  cat:"Wellness",    title:"Yoga instruction",         user:"Aisha B.",   avatar:"A", circle:4, available:true,  desc:"200hr certified. 1-1 or small group. Hatha and Vinyasa. Your place or mine.",                                   offer:"Any skill swap",                  time:"1d ago",  dist:"0.2mi", img:"🧘" },
-  { id:10, x:15, y:68, type:"object", cat:"Kitchen",     title:"Pasta machine + moulds",   user:"Marco D.",   avatar:"M", circle:2, available:false, desc:"Marcato Atlas + a full set of pasta moulds. Makes fresh pasta a joy. Collect from Bethnal Green.",               offer:"Cook me something",               time:"2d ago",  dist:"1.3mi", img:"🍝" },
+  { id:1,  x:44, y:36, type:"object", cat:"Creative",  title:"Vintage film camera",   user:"Maya K.",  avatar:"M", circle:3, available:true,  desc:"35mm Olympus OM-1, fully working. One roll of Kodak Gold included. Handle with love.",                          offer:"A favour, a skill, or anything useful",              time:"2h ago", dist:"0.3mi", img:"📷" },
+  { id:2,  x:62, y:53, type:"skill",  cat:"Music",     title:"Guitar lessons",         user:"Tom R.",   avatar:"T", circle:2, available:true,  desc:"10 years playing, acoustic or electric. Beginners very welcome. Weekends work best.",                          offer:"Lend me something or share a skill — no cash involved", time:"5h ago", dist:"0.7mi", img:"🎸" },
+  { id:3,  x:27, y:59, type:"object", cat:"Kitchen",   title:"Bread proving basket",   user:"Priya S.", avatar:"P", circle:4, available:false, desc:"Lined banneton + dutch oven. Barely used. Perfect if you are getting into sourdough.",                         offer:"A skill, object, or favour",                         time:"1d ago", dist:"0.4mi", img:"🍞" },
+  { id:4,  x:73, y:27, type:"object", cat:"Sport",     title:"Full ski set",           user:"Leon B.",  avatar:"L", circle:1, available:true,  desc:"Boots UK 10, 170cm skis, poles. Collect from Hackney. Available outside ski season.",                         offer:"Anything useful — skill, object, or favour",         time:"2d ago", dist:"1.1mi", img:"⛷️" },
+  { id:5,  x:19, y:33, type:"skill",  cat:"Writing",   title:"Copywriting & editing",  user:"Sal O.",   avatar:"S", circle:3, available:true,  desc:"10 years in publishing. CV reviews, pitch decks, creative writing feedback — all welcome.",                   offer:"Swap a skill",                                       time:"3d ago", dist:"0.5mi", img:"✍️" },
+  { id:6,  x:55, y:71, type:"object", cat:"Creative",  title:"Sewing machine",         user:"Jo W.",    avatar:"J", circle:2, available:true,  desc:"Singer Heavy Duty 4432. Perfect for clothes, repairs or upholstery. I'll show you the basics.",                offer:"Open to anything",                                   time:"4d ago", dist:"0.6mi", img:"🧵" },
+  { id:7,  x:35, y:77, type:"skill",  cat:"Sport",     title:"Bike repair",            user:"Rafi M.",  avatar:"R", circle:5, available:true,  desc:"Can fix most things — brakes, gears, punctures, wheel truing. Bring it round any evening.",                  offer:"A favour or skill swap",                             time:"5d ago", dist:"0.9mi", img:"🔧" },
+  { id:8,  x:80, y:62, type:"object", cat:"Creative",  title:"Darkroom enlarger",      user:"Chen W.",  avatar:"C", circle:3, available:true,  desc:"Durst M605. Full analogue setup. For the serious film photographer. Collect in person.",                       offer:"Teach me a skill or lend me something",              time:"6h ago", dist:"0.8mi", img:"🔭" },
+  { id:9,  x:50, y:20, type:"skill",  cat:"Wellness",  title:"Yoga instruction",       user:"Aisha B.", avatar:"A", circle:4, available:true,  desc:"200hr certified. 1-1 or small group. Hatha and Vinyasa. Your place or mine.",                                 offer:"A skill or favour in return",                        time:"1d ago", dist:"0.2mi", img:"🧘" },
+  { id:10, x:15, y:68, type:"object", cat:"Kitchen",   title:"Pasta machine + moulds", user:"Marco D.", avatar:"M", circle:2, available:false, desc:"Marcato Atlas + a full set of pasta moulds. Makes fresh pasta a joy. Collect from Bethnal Green.",             offer:"Cook something for me or teach me a recipe",         time:"2d ago", dist:"1.3mi", img:"🍝" },
+];
+
+const TAG_CATEGORIES = [
+  { label: "Skills I can share", tags: ["Music","Cooking","Baking","Gardening","Art & craft","Sewing","Photography","Languages","Writing","Tutoring","Fitness","Yoga","Bike repair","Tech help","Carpentry","Plumbing","Childcare","Pet care"] },
+  { label: "Objects I can lend", tags: ["Tools","Kitchen kit","Sports gear","Camping","Musical instruments","Books","Board games","Baby & kids","Furniture","Appliances","Clothes & fabric","Creative supplies","Electronics","Bikes"] },
+  { label: "Time & help I can offer", tags: ["Heavy lifting","Moving help","Odd jobs","Errands","Dog walking","Cooking for someone","Gardening help","Companionship"] },
 ];
 
 const CATS = ["All","Objects","Skills","Creative","Music","Kitchen","Sport","Writing","Wellness"];
@@ -154,7 +160,8 @@ function Onboarding({ onDone }) {
   const [verifying, setVerifying] = useState(false);
   const [digits, setDigits] = useState(["","","","","",""]);
   const [photo, setPhoto] = useState(null);
-  const [offer, setOffer] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [offerNote, setOfferNote] = useState("");
   const [anim, setAnim] = useState(true);
 
   const d0=useRef(),d1=useRef(),d2=useRef(),d3=useRef(),d4=useRef(),d5=useRef();
@@ -162,9 +169,16 @@ function Onboarding({ onDone }) {
   const photoInputRef=useRef();
 
   const next = () => { setAnim(false); setTimeout(()=>{ setStep(s=>s+1); setAnim(true); }, 200); };
+  const prev = () => { setAnim(false); setTimeout(()=>{ setStep(s=>Math.max(s-1, 1)); setAnim(true); }, 200); };
+
+  const toggleTag = (tag) => {
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+  };
 
   const validateMobile = (v) => {
-    const s = v.replace(/\s/g,"");
+    const s = v.replace(/\s/g, "");
     return /^(07\d{9}|\+447\d{9})$/.test(s);
   };
 
@@ -176,41 +190,76 @@ function Onboarding({ onDone }) {
 
   const handleDigit = (i, val) => {
     if (!/^\d?$/.test(val)) return;
-    const nd=[...digits]; nd[i]=val; setDigits(nd);
-    if (val && i<5) digitRefs[i+1].current?.focus();
-    if (nd.every(d=>d!=="")) { setTimeout(()=>{ setVerifying(false); next(); }, 400); }
+    const nd = [...digits]; nd[i] = val; setDigits(nd);
+    if (val && i < 5) digitRefs[i+1].current?.focus();
+    if (nd.every(d => d !== "")) { setTimeout(()=>{ setVerifying(false); next(); }, 400); }
   };
 
   const handlePhotoSelect = (e) => {
-    const file=e.target.files?.[0];
-    if (file) setPhoto(URL.createObjectURL(file));
+    const f = e.target.files?.[0];
+    if (f) setPhoto(URL.createObjectURL(f));
   };
 
-  const TOTAL=5;
+  const TOTAL = 5;
+  const showProgress = step >= 2 && step <= 6;
+  const showBack = step >= 2 && step <= 6;
+
+  const BackLink = () => (
+    <button onClick={prev} style={{background:"none",border:"none",color:C.chalkD,cursor:"pointer",fontSize:10,letterSpacing:2,padding:"0 0 16px",fontFamily:C.mono,display:"block"}}>
+      back
+    </button>
+  );
 
   const slides = [
+
+    // 0 — Splash
     <div key="0" style={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",padding:"0 8px"}}>
       <div style={{marginBottom:24}}><Logo size={80}/></div>
       <div style={{fontSize:32,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.1,marginBottom:12}}>
         What goes<br/>around,<br/><span style={{color:C.flame}}>comes around.</span>
       </div>
       <div style={{fontSize:14,color:C.chalkD,lineHeight:1.8,marginBottom:32,maxWidth:280}}>
-        A moneyless neighbourhood exchange. Borrow. Lend. Share skills. Build trust.
+        Think of it like a library — but for your whole street. Borrow a drill. Lend your guitar. Teach someone to cook. No money. No awkwardness. Just neighbours.
       </div>
-      <Btn full onClick={next}>GET STARTED →</Btn>
+      <Btn full onClick={next}>GET STARTED</Btn>
       <div style={{fontSize:10,color:C.chalkDD,marginTop:14,fontFamily:C.mono}}>No money. No ads. No algorithm.</div>
     </div>,
 
+    // 1 — How it works
     <div key="1" style={{width:"100%"}}>
-      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>◎ STEP 1 OF {TOTAL}</div>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:12}}>BEFORE YOU START</div>
+      <div style={{fontSize:24,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.25,marginBottom:8}}>Here's how Roundabout works.</div>
+      <div style={{fontSize:13,color:C.chalkD,lineHeight:1.8,marginBottom:20}}>No money changes hands. Ever. Not now, not later, not hidden anywhere.</div>
+      {[
+        {n:"1", title:"Find something you need nearby", desc:"Browse what your neighbours are offering — tools, skills, time, kitchen kit. All within 2 miles."},
+        {n:"2", title:"Offer something in return", desc:"Not money. Just something you have or can do — a skill, an object, a favour. Even making someone a cup of tea counts."},
+        {n:"3", title:"Meet your neighbour, make the swap", desc:"Agree a time, confirm it is done. Your reputation grows with every exchange. So does theirs."},
+      ].map(({n,title,desc}) => (
+        <div key={n} style={{background:C.coal,borderRadius:"0 12px 12px 0",padding:16,marginBottom:10,borderLeft:`3px solid ${C.flame}`}}>
+          <div style={{fontSize:32,color:C.flame,fontFamily:C.font,fontWeight:"bold",lineHeight:1,marginBottom:6}}>{n}</div>
+          <div style={{fontSize:13,fontWeight:"bold",color:C.chalk,fontFamily:C.mono,marginBottom:4}}>{title}</div>
+          <div style={{fontSize:12,color:C.chalkD,lineHeight:1.7}}>{desc}</div>
+        </div>
+      ))}
+      <div style={{background:C.glow,border:`1px solid ${C.flame}44`,borderRadius:8,padding:"10px 14px",marginBottom:20,display:"flex",alignItems:"flex-start",gap:10}}>
+        <span style={{fontSize:14,flexShrink:0}}>🔒</span>
+        <span style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,lineHeight:1.7}}>Everyone is verified with a UK mobile number and a real photo. You can see how many exchanges your neighbour has completed before agreeing to anything. You never have to share your address.</span>
+      </div>
+      <Btn full onClick={next}>GOT IT — LET'S GO</Btn>
+    </div>,
+
+    // 2 — Name (STEP 1 OF 5)
+    <div key="2" style={{width:"100%"}}>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>STEP 1 OF {TOTAL}</div>
       <div style={{fontSize:26,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>What do your<br/>neighbours call you?</div>
       <div style={{fontSize:12,color:C.chalkD,marginBottom:24,lineHeight:1.7}}>Just a first name. Roundabout is built on real people, not handles.</div>
       <Input value={name} onChange={setName} placeholder="Your first name..."/>
-      <div style={{marginTop:16}}><Btn full onClick={next} disabled={!name.trim()}>NEXT →</Btn></div>
+      <div style={{marginTop:16}}><Btn full onClick={next} disabled={!name.trim()}>NEXT</Btn></div>
     </div>,
 
-    <div key="2" style={{width:"100%"}}>
-      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>◎ STEP 2 OF {TOTAL}</div>
+    // 3 — Postcode (STEP 2 OF 5)
+    <div key="3" style={{width:"100%"}}>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>STEP 2 OF {TOTAL}</div>
       <div style={{fontSize:26,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>What's your<br/>postcode?</div>
       <div style={{fontSize:12,color:C.chalkD,marginBottom:8,lineHeight:1.7}}>Roundabout matches you with neighbours within a 2 mile radius.</div>
       <div style={{background:C.glow,border:`1px solid ${C.flame}44`,borderRadius:8,padding:"8px 12px",marginBottom:20,display:"flex",alignItems:"center",gap:8}}>
@@ -218,7 +267,7 @@ function Onboarding({ onDone }) {
         <span style={{fontSize:10,color:C.chalkD,fontFamily:C.mono,lineHeight:1.6}}>Your postcode is used only to show listings within 2 miles. Never shared or sold.</span>
       </div>
       <Input value={hood} onChange={v=>setHood(v.toUpperCase())} placeholder="e.g. E8 1DY or SW1A 1AA"/>
-      {hood.length>=5 && (
+      {hood.length >= 5 && (
         <div style={{marginTop:10,background:C.coal,borderRadius:8,padding:"10px 14px",display:"flex",alignItems:"center",gap:10}}>
           <div style={{width:8,height:8,borderRadius:"50%",background:C.success,flexShrink:0}}/>
           <div>
@@ -227,11 +276,12 @@ function Onboarding({ onDone }) {
           </div>
         </div>
       )}
-      <div style={{marginTop:16}}><Btn full onClick={next} disabled={hood.length<5}>NEXT →</Btn></div>
+      <div style={{marginTop:16}}><Btn full onClick={next} disabled={hood.length < 5}>NEXT</Btn></div>
     </div>,
 
-    <div key="3" style={{width:"100%"}}>
-      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>◎ STEP 3 OF {TOTAL}</div>
+    // 4 — Mobile (STEP 3 OF 5)
+    <div key="4" style={{width:"100%"}}>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>STEP 3 OF {TOTAL}</div>
       <div style={{fontSize:26,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>What's your mobile<br/>number?</div>
       <div style={{fontSize:12,color:C.chalkD,marginBottom:20,lineHeight:1.7}}>So neighbours can get in touch. UK numbers only.</div>
       {!verifying ? (
@@ -242,16 +292,16 @@ function Onboarding({ onDone }) {
             <span style={{fontSize:12}}>🔒</span>
             <span style={{fontSize:10,color:C.chalkD,fontFamily:C.mono,lineHeight:1.6}}>Used for verification only. Never sold, never shared.</span>
           </div>
-          <div style={{marginTop:16}}><Btn full onClick={handleMobileNext} disabled={!mobile.trim()}>NEXT →</Btn></div>
+          <div style={{marginTop:16}}><Btn full onClick={handleMobileNext} disabled={!mobile.trim()}>NEXT</Btn></div>
         </>
       ) : (
         <div>
-          <button onClick={()=>{ setVerifying(false); setDigits(["","","","","",""]); }} style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,cursor:"pointer",display:"block",marginBottom:16,background:"none",border:"none",padding:0}}>← Wrong number?</button>
+          <button onClick={()=>{ setVerifying(false); setDigits(["","","","","",""]); }} style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,cursor:"pointer",display:"block",marginBottom:16,background:"none",border:"none",padding:0}}>Wrong number?</button>
           <div style={{fontSize:13,color:C.chalkD,fontFamily:C.mono,marginBottom:20,lineHeight:1.7}}>
             We've sent a 6-digit code to <span style={{color:C.chalk}}>{mobile}</span>.
           </div>
           <div style={{display:"flex",gap:8,justifyContent:"center",marginBottom:8}}>
-            {digits.map((d,i)=>(
+            {digits.map((d,i) => (
               <input key={i} ref={digitRefs[i]} value={d} maxLength={1}
                 onChange={e=>handleDigit(i,e.target.value)}
                 onKeyDown={e=>{ if(e.key==="Backspace"&&!d&&i>0) digitRefs[i-1].current?.focus(); }}
@@ -264,10 +314,11 @@ function Onboarding({ onDone }) {
       )}
     </div>,
 
-    <div key="4" style={{width:"100%"}}>
-      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>◎ STEP 4 OF {TOTAL}</div>
+    // 5 — Photo (STEP 4 OF 5)
+    <div key="5" style={{width:"100%"}}>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>STEP 4 OF {TOTAL}</div>
       <div style={{fontSize:26,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>Put a face to<br/>your name.</div>
-      <div style={{fontSize:12,color:C.chalkD,marginBottom:24,lineHeight:1.7}}>Roundabout is built on trust. A photo helps neighbours know who they're dealing with.</div>
+      <div style={{fontSize:12,color:C.chalkD,marginBottom:24,lineHeight:1.7}}>A photo builds trust with your neighbours. You can always add one later — but listings with photos get far more responses.</div>
       <input ref={photoInputRef} type="file" accept="image/*" onChange={handlePhotoSelect} style={{display:"none"}}/>
       <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
         {photo ? (
@@ -279,33 +330,65 @@ function Onboarding({ onDone }) {
           <div onClick={()=>photoInputRef.current?.click()} style={{width:80,height:80,borderRadius:"50%",border:`2px dashed ${C.coal2}`,background:C.coal,display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,cursor:"pointer"}}>📷</div>
         )}
       </div>
-      <div style={{marginTop:24}}><Btn full onClick={next}>{photo?"NEXT →":"SKIP FOR NOW →"}</Btn></div>
+      <div style={{marginTop:24}}><Btn full onClick={next}>{photo ? "NEXT" : "SKIP FOR NOW"}</Btn></div>
     </div>,
 
-    <div key="5" style={{width:"100%"}}>
-      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>◎ STEP 5 OF {TOTAL}</div>
-      <div style={{fontSize:26,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>What's one thing<br/>you could share?</div>
-      <div style={{fontSize:12,color:C.chalkD,marginBottom:24,lineHeight:1.7}}>Something you own, something you know, or a bit of your time.</div>
-      <Input value={offer} onChange={setOffer} placeholder="e.g. My guitar, baking lessons, a spare tent..." multiline rows={3}/>
-      <div style={{marginTop:16}}><Btn full onClick={next} disabled={!offer.trim()}>JOIN THE ROUND →</Btn></div>
-      <SkipLink onClick={()=>{ setOffer("I'll add something later"); next(); }}/>
+    // 6 — Tag picker (STEP 5 OF 5)
+    <div key="6" style={{width:"100%"}}>
+      <div style={{fontSize:11,color:C.flame,fontFamily:C.mono,letterSpacing:3,marginBottom:8}}>STEP 5 OF {TOTAL}</div>
+      <div style={{fontSize:24,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:6}}>What can you offer<br/>your neighbours?</div>
+      <div style={{fontSize:12,color:C.chalkD,marginBottom:20,lineHeight:1.7}}>Tap everything that applies. This helps neighbours find you — you can always update it later.</div>
+      {TAG_CATEGORIES.map(({label,tags}) => (
+        <div key={label}>
+          <div style={{fontSize:9,letterSpacing:2,color:C.chalkDD,fontFamily:C.mono,marginBottom:8,marginTop:16}}>{label.toUpperCase()}</div>
+          <div style={{display:"flex",flexWrap:"wrap"}}>
+            {tags.map(tag => (
+              <button key={tag} onClick={()=>toggleTag(tag)} style={{
+                background: selectedTags.includes(tag) ? C.flame : C.coal,
+                border: `1.5px solid ${selectedTags.includes(tag) ? C.flame : C.coal2}`,
+                color: selectedTags.includes(tag) ? C.ember : C.chalkD,
+                padding:"5px 12px", borderRadius:20, fontSize:11, fontFamily:C.mono,
+                cursor:"pointer", margin:"0 4px 6px 0", transition:"all 0.15s",
+              }}>{tag}</button>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div style={{fontSize:11,color:C.chalkDD,fontFamily:C.mono,marginTop:20,marginBottom:8}}>Anything specific to add? (optional)</div>
+      <Input value={offerNote} onChange={setOfferNote} placeholder="e.g. I can teach beginners guitar, or lend my camera"/>
+      <div style={{marginTop:16}}>
+        <Btn full onClick={next}>{selectedTags.length > 0 ? "JOIN YOUR NEIGHBOURHOOD" : "SKIP FOR NOW"}</Btn>
+      </div>
     </div>,
 
-    <div key="6" style={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",padding:"0 8px"}}>
-      <div style={{width:80,height:80,borderRadius:"50%",background:C.flame,display:"flex",alignItems:"center",justifyContent:"center",fontSize:32,fontWeight:"bold",fontFamily:C.mono,color:C.ember,marginBottom:24,boxShadow:`0 0 0 6px ${C.glow}`}}>{name?name[0].toUpperCase():"Y"}</div>
-      <div style={{fontSize:28,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:10}}>Welcome to the round,<br/><span style={{color:C.flame}}>{name||"neighbour"}.</span></div>
-      <div style={{fontSize:13,color:C.chalkD,lineHeight:1.8,marginBottom:10}}>Showing listings within 2 miles of <span style={{color:C.chalk}}>{hood||"your postcode"}</span>.<br/>Your neighbours are waiting.</div>
+    // 7 — Welcome done
+    <div key="7" style={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",padding:"0 8px"}}>
+      <div style={{
+        width:80, height:80, borderRadius:"50%",
+        background:C.flame, display:"flex", alignItems:"center",
+        justifyContent:"center", fontSize:32, fontWeight:"bold",
+        fontFamily:C.mono, color:C.ember, marginBottom:24,
+        boxShadow:`0 0 0 6px ${C.glow}`,
+      }}>{name ? name[0].toUpperCase() : "Y"}</div>
+      <div style={{fontSize:28,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:10}}>
+        Welcome to the round,<br/><span style={{color:C.flame}}>{name || "neighbour"}.</span>
+      </div>
+      <div style={{fontSize:13,color:C.chalkD,lineHeight:1.8,marginBottom:4}}>Your neighbours are more helpful than you think.</div>
+      <div style={{fontSize:13,color:C.chalkD,lineHeight:1.8,marginBottom:10}}>No money. Just people who live nearby.</div>
       <div style={{display:"flex",gap:6,justifyContent:"center",marginBottom:32}}><Circles level={1}/></div>
-      <Btn full onClick={onDone}>SEE WHAT'S NEARBY →</Btn>
+      <Btn full onClick={onDone}>SEE WHAT'S NEARBY</Btn>
     </div>,
   ];
 
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",padding:"32px 24px 24px",overflowY:"auto"}}>
-      {step>0 && step<slides.length-1 && (
-        <div style={{height:2,background:C.coal2,borderRadius:2,marginBottom:32,overflow:"hidden"}}>
+      {showProgress && (
+        <div style={{height:2,background:C.coal2,borderRadius:2,marginBottom:16,overflow:"hidden"}}>
           <div style={{height:"100%",background:C.flame,width:`${((step-1)/TOTAL)*100}%`,transition:"width 0.3s ease",borderRadius:2}}/>
         </div>
+      )}
+      {showBack && (
+        <div style={{marginBottom:8}}><BackLink/></div>
       )}
       <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",opacity:anim?1:0,transform:anim?"translateY(0)":"translateY(8px)",transition:"all 0.2s ease"}}>
         {slides[step]}
@@ -344,7 +427,7 @@ function MapScreen({ onDetail }) {
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"10px 14px 8px",display:"flex",gap:6,overflowX:"auto",flexShrink:0}}>
-        {[["all","All"],["available","● Available"],["objects","Objects"],["skills","Skills"]].map(([v,l])=>(
+        {[["all","All"],["available","Available"],["objects","Objects"],["skills","Skills"]].map(([v,l])=>(
           <button key={v} onClick={()=>setFilter(v)} style={{background:filter===v?C.flame:C.coal,border:`1.5px solid ${filter===v?C.flame:C.coal2}`,color:filter===v?C.ember:C.chalkD,padding:"5px 12px",cursor:"pointer",fontSize:10,fontFamily:C.mono,letterSpacing:1,borderRadius:20,fontWeight:filter===v?"bold":"normal",whiteSpace:"nowrap",flexShrink:0,transition:"all 0.15s"}}>{l}</button>
         ))}
       </div>
@@ -376,15 +459,15 @@ function MapScreen({ onDetail }) {
               <div style={{display:"flex",gap:6,marginBottom:6,flexWrap:"wrap",alignItems:"center"}}>
                 <span style={{fontSize:16}}>{sel.img}</span>
                 <Pill label={sel.type.toUpperCase()}/>
-                {sel.available?<Pill label="● Now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>○ unavailable</span>}
+                {sel.available?<Pill label="Now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>unavailable</span>}
               </div>
               <div style={{fontSize:16,fontWeight:"bold",color:C.chalk,fontFamily:C.font,marginBottom:3,lineHeight:1.2}}>{sel.title}</div>
-              <div style={{fontSize:11,color:C.chalkD,marginBottom:6}}>{sel.user} · {sel.dist} away</div>
+              <div style={{fontSize:11,color:C.chalkD,marginBottom:6}}>{sel.user} - {sel.dist} away</div>
               <Circles level={sel.circle}/>
             </div>
             <Av letter={sel.avatar} size={42}/>
           </div>
-          <Btn full onClick={()=>onDetail(sel)}>VIEW + REQUEST →</Btn>
+          <Btn full onClick={()=>onDetail(sel)}>VIEW + REQUEST</Btn>
         </div>
       ) : (
         <div style={{padding:"10px",textAlign:"center",flexShrink:0}}><span style={{fontSize:10,color:C.chalkDD,fontFamily:C.mono}}>tap a pin to preview</span></div>
@@ -403,7 +486,7 @@ function BrowseScreen({ onDetail }) {
   });
   return (
     <div style={{flex:1,overflowY:"auto",padding:"14px"}}>
-      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:12,fontFamily:C.mono}}>◎ WITHIN 2 MILES OF E8</div>
+      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:12,fontFamily:C.mono}}>WITHIN 2 MILES OF E8</div>
       <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:16}}>
         {CATS.map(c=>(
           <button key={c} onClick={()=>setCat(c)} style={{background:cat===c?C.flame:C.coal,border:`1.5px solid ${cat===c?C.flame:C.coal2}`,color:cat===c?C.ember:C.chalkD,padding:"4px 11px",cursor:"pointer",fontSize:9,fontFamily:C.mono,letterSpacing:1,borderRadius:20,fontWeight:cat===c?"bold":"normal",transition:"all 0.15s"}}>{c}</button>
@@ -417,7 +500,7 @@ function BrowseScreen({ onDetail }) {
 function BrowseCard({ item, onClick }) {
   const [hov,setHov]=useState(false);
   const firstName=item.user.split(" ")[0];
-  const truncOffer=item.offer.length>28?item.offer.slice(0,28)+"…":item.offer;
+  const truncOffer=item.offer.length>28?item.offer.slice(0,28)+"...":item.offer;
   return (
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
       style={{background:hov?C.coal2:"#251408",border:`1.5px solid ${hov?C.flame:C.coal2}`,borderRadius:12,padding:"14px",marginBottom:10,cursor:"pointer",transition:"all 0.18s"}}>
@@ -425,17 +508,20 @@ function BrowseCard({ item, onClick }) {
         <div style={{flex:1}}>
           <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:7,flexWrap:"wrap"}}>
             <span style={{fontSize:14}}>{item.img}</span>
-            <Pill label={`${item.cat} · ${item.type}`} color={C.sky} bg={`${C.sky}18`}/>
-            {item.available?<Pill label="● Now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>○ unavailable</span>}
+            <Pill label={`${item.cat} - ${item.type}`} color={C.sky} bg={`${C.sky}18`}/>
+            {item.available?<Pill label="Now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>unavailable</span>}
           </div>
           <div style={{fontSize:15,fontWeight:"bold",color:C.chalk,fontFamily:C.font,marginBottom:4,lineHeight:1.25}}>{item.title}</div>
-          <div style={{fontSize:11,color:C.chalkD,lineHeight:1.65,marginBottom:10}}>{item.desc.length > 120 ? item.desc.slice(0, item.desc.lastIndexOf(" ", 120)) + "…" : item.desc}</div>
+          <div style={{fontSize:11,color:C.chalkD,lineHeight:1.65,marginBottom:10}}>{item.desc.length>120?item.desc.slice(0,item.desc.lastIndexOf(" ",120))+"...":item.desc}</div>
         </div>
         <Av letter={item.avatar} size={38}/>
       </div>
-      <div style={{borderTop:`1px solid ${C.coal2}`,paddingTop:8,display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
-        <span style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,flexShrink:0}}>{firstName} · {item.dist}</span>
-        <span style={{fontSize:11,color:C.flame,fontFamily:C.mono,textAlign:"right"}}>Wants: {truncOffer}</span>
+      <div style={{borderTop:`1px solid ${C.coal2}`,paddingTop:8}}>
+        <div style={{fontSize:9,color:C.chalkDD,fontFamily:C.mono,letterSpacing:1,marginBottom:4}}>NO CASH — favour, skill, or object only</div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
+          <span style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,flexShrink:0}}>{firstName} - {item.dist}</span>
+          <span style={{fontSize:11,color:C.flame,fontFamily:C.mono,textAlign:"right"}}>Happy to receive: {truncOffer}</span>
+        </div>
       </div>
     </div>
   );
@@ -444,10 +530,11 @@ function BrowseCard({ item, onClick }) {
 function DetailScreen({ listing, onBack }) {
   const [sent,setSent]=useState(false);
   const [msg,setMsg]=useState("");
+  const [duration,setDuration]=useState("");
   const vis=useAnim(0);
   return (
     <div style={{flex:1,overflowY:"auto",padding:"14px",opacity:vis?1:0,transition:"opacity 0.2s"}}>
-      <button onClick={onBack} style={{background:"none",border:"none",color:C.chalkD,cursor:"pointer",fontSize:10,letterSpacing:2,padding:"0 0 16px",fontFamily:C.mono,display:"block"}}>← BACK</button>
+      <button onClick={onBack} style={{background:"none",border:"none",color:C.chalkD,cursor:"pointer",fontSize:10,letterSpacing:2,padding:"0 0 16px",fontFamily:C.mono,display:"block"}}>BACK</button>
       <div style={{background:C.coal,borderRadius:14,padding:20,marginBottom:12,border:`1.5px solid ${C.coal2}`}}>
         <div style={{fontSize:32,marginBottom:10,textAlign:"center"}}>{listing.img}</div>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
@@ -455,7 +542,7 @@ function DetailScreen({ listing, onBack }) {
             <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
               <Pill label={listing.type.toUpperCase()}/>
               <Pill label={listing.cat} color={C.sky} bg={`${C.sky}18`}/>
-              {listing.available?<Pill label="● Available now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>○ Not available</span>}
+              {listing.available?<Pill label="Available now" color={C.success} bg={`${C.success}18`}/>:<span style={{fontSize:9,color:C.chalkD,fontFamily:C.mono}}>Not available</span>}
             </div>
             <div style={{fontSize:22,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2}}>{listing.title}</div>
           </div>
@@ -467,16 +554,26 @@ function DetailScreen({ listing, onBack }) {
             <div key={k}><div style={{fontSize:8,letterSpacing:2,color:C.chalkDD,marginBottom:3,fontFamily:C.mono}}>{k}</div><div style={{fontSize:12,color:C.chalk,fontFamily:C.mono}}>{v}</div></div>
           ))}
           <div style={{gridColumn:"1/-1"}}><div style={{fontSize:8,letterSpacing:2,color:C.chalkDD,marginBottom:6,fontFamily:C.mono}}>TRUST CIRCLES</div><Circles level={listing.circle}/></div>
-          <div style={{gridColumn:"1/-1"}}><div style={{fontSize:8,letterSpacing:2,color:C.chalkDD,marginBottom:3,fontFamily:C.mono}}>WANTS IN RETURN</div><div style={{fontSize:13,color:C.flame,fontFamily:C.mono}}>{listing.offer}</div></div>
+          <div style={{gridColumn:"1/-1"}}><div style={{fontSize:8,letterSpacing:2,color:C.chalkDD,marginBottom:3,fontFamily:C.mono}}>HAPPY TO RECEIVE</div><div style={{fontSize:13,color:C.flame,fontFamily:C.mono}}>{listing.offer}</div></div>
         </div>
       </div>
       {!sent ? (
         <div style={{background:C.coal,borderRadius:14,padding:16,border:`1.5px solid ${C.coal2}`}}>
-          <div style={{fontSize:11,fontWeight:"bold",color:C.chalk,fontFamily:C.font,marginBottom:4}}>Make a request</div>
-          <div style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,marginBottom:2}}>What can you offer in return?</div>
-          <div style={{fontSize:11,color:C.chalkDD,fontFamily:C.mono,marginBottom:14}}>Be specific — it makes a yes much easier.</div>
-          <Input value={msg} onChange={setMsg} placeholder="e.g. I could lend you my pasta machine in return…" multiline rows={4}/>
-          <div style={{marginTop:12}}><Btn full onClick={()=>setSent(true)} disabled={!msg.trim()}>SEND REQUEST →</Btn></div>
+          <div style={{fontSize:9,letterSpacing:2,color:C.flame,fontFamily:C.mono,marginBottom:10}}>NO MONEY — skills, objects, or time only</div>
+          <div style={{fontSize:14,fontWeight:"bold",color:C.chalk,fontFamily:C.font,marginBottom:6}}>Make a request</div>
+          <div style={{fontSize:11,color:C.chalkD,fontFamily:C.mono,marginBottom:2}}>What could you offer in return? No money — a favour, skill, or something you own.</div>
+          <div style={{fontSize:11,color:C.chalkDD,fontFamily:C.mono,marginBottom:14}}>Think: something you can do, lend, or teach. No payment, ever.</div>
+          <div style={{marginBottom:14}}>
+            <div style={{fontSize:8,letterSpacing:2,color:C.chalkDD,fontFamily:C.mono,marginBottom:8}}>HOW LONG DO YOU NEED IT?</div>
+            <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+              {["A few days","1-2 weeks","Up to a month","We'll agree"].map(d=>(
+                <button key={d} onClick={()=>setDuration(d)} style={{background:duration===d?C.flame:C.coal,border:`1.5px solid ${duration===d?C.flame:C.coal2}`,color:duration===d?C.ember:C.chalkD,padding:"6px 12px",borderRadius:20,cursor:"pointer",fontSize:10,fontFamily:C.mono,transition:"all 0.15s",whiteSpace:"nowrap"}}>{d}</button>
+              ))}
+            </div>
+            {!duration && <div style={{fontSize:10,color:C.chalkDD,fontFamily:C.mono,marginTop:8}}>Please select how long you need it.</div>}
+          </div>
+          <Input value={msg} onChange={setMsg} placeholder="e.g. I could lend you my pasta machine in return" multiline rows={4}/>
+          <div style={{marginTop:12}}><Btn full onClick={()=>setSent(true)} disabled={!msg.trim()||!duration}>SEND REQUEST</Btn></div>
         </div>
       ) : (
         <div style={{background:C.coal,borderRadius:14,padding:28,textAlign:"center",borderLeft:`4px solid ${C.success}`,animation:"slideUp 0.3s ease"}}>
@@ -513,14 +610,24 @@ function OfferScreen() {
   ];
   const fields=["title","desc","available","offer"];
   const placeholders={
-    object:["e.g. Vintage Olympus OM-1 film camera, great condition","35mm, fully working, comes with film. Handle with love.","Weekends, or any time with a day's notice","Open to offers — I'm curious what you'd bring"],
-    skill:["e.g. Guitar lessons — 10 years experience","Acoustic or electric, all levels welcome. I come to you.","Evenings and weekends","Borrow something of mine, or teach me something back"],
+    object:[
+      "e.g. Vintage Olympus OM-1 film camera, great condition",
+      "35mm, fully working, comes with film. Handle with love.",
+      "Weekends, or any time with a day's notice",
+      "e.g. Help me move a sofa, teach me to cook, lend me your drill — no money ever",
+    ],
+    skill:[
+      "e.g. Guitar lessons — 10 years experience, all levels welcome",
+      "Acoustic or electric, beginners very welcome. I come to you.",
+      "Evenings and weekends work best",
+      "Lend me something, share a skill, or do me a favour — no cash involved",
+    ],
   };
 
   return (
     <div style={{flex:1,overflowY:"auto",padding:"16px"}}>
-      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:6,fontFamily:C.mono}}>◎ PUT SOMETHING IN THE ROUND</div>
-      <div style={{fontSize:24,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:18}}>What can you<br/>lend or share?</div>
+      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:6,fontFamily:C.mono}}>SHARE SOMETHING WITH YOUR NEIGHBOURS</div>
+      <div style={{fontSize:24,fontWeight:"bold",color:C.chalk,fontFamily:C.font,lineHeight:1.2,marginBottom:18}}>Share something<br/>with your neighbours</div>
       <div style={{display:"flex",marginBottom:18,borderRadius:10,overflow:"hidden",border:`1.5px solid ${C.coal2}`}}>
         {["object","skill"].map(t=>(
           <button key={t} onClick={()=>setType(t)} style={{flex:1,background:type===t?C.flame:"transparent",border:"none",color:type===t?C.ember:C.chalkD,padding:"12px",cursor:"pointer",fontSize:11,fontFamily:C.mono,letterSpacing:2,fontWeight:"bold",transition:"all 0.15s"}}>{t.toUpperCase()}</button>
@@ -549,7 +656,7 @@ function OfferScreen() {
                   <span style={{fontSize:10,color:C.chalkDD,fontFamily:C.mono}}>Tap to upload a photo</span>
                 </div>
               )}
-              <div style={{marginTop:18}}><Btn full onClick={nextStep}>{photoPreview?"ADD PHOTO →":"SKIP FOR NOW →"}</Btn></div>
+              <div style={{marginTop:18}}><Btn full onClick={nextStep}>{photoPreview?"ADD PHOTO":"SKIP FOR NOW"}</Btn></div>
             </>
           ) : (
             <>
@@ -569,9 +676,9 @@ function OfferScreen() {
                 </div>
               )}
               <div style={{display:"flex",gap:10,marginTop:18}}>
-                <Btn secondary onClick={prevStep} small>← Back</Btn>
+                <Btn secondary onClick={prevStep} small>Back</Btn>
                 <Btn full onClick={step<TOTAL_DOTS-1?nextStep:submit} disabled={!form[fields[step-1]].trim()}>
-                  {step<TOTAL_DOTS-1?"NEXT →":"PUT IT IN THE ROUND →"}
+                  {step<TOTAL_DOTS-1?"NEXT":"YOUR NEIGHBOURS CAN NOW FIND THIS"}
                 </Btn>
               </div>
             </>
@@ -580,12 +687,16 @@ function OfferScreen() {
       ) : (
         <div style={{background:C.coal,borderRadius:14,padding:28,textAlign:"center",borderLeft:`4px solid ${C.flame}`,animation:"slideUp 0.3s ease"}}>
           <div style={{marginBottom:14}}><Logo size={56}/></div>
-          <div style={{color:C.flame,fontSize:16,fontFamily:C.mono,fontWeight:"bold",marginBottom:6}}>It's in the round.</div>
+          <div style={{color:C.flame,fontSize:16,fontFamily:C.mono,fontWeight:"bold",marginBottom:6}}>Your neighbours can now find this.</div>
           <div style={{color:C.chalkD,fontSize:12,lineHeight:1.9,fontFamily:C.mono}}>Your neighbours will find it.<br/><span style={{color:C.flame,fontStyle:"italic"}}>What goes around, comes around.</span></div>
         </div>
       )}
       <div style={{borderTop:`1px solid ${C.coal2}`,marginTop:28,paddingTop:14,textAlign:"center"}}>
-        <div style={{fontSize:10,color:C.chalkDD,lineHeight:2,fontFamily:C.mono}}>No money. No ads. No algorithm.<br/>Just neighbours.</div>
+        <div style={{fontSize:10,color:C.chalkDD,lineHeight:2,fontFamily:C.mono}}>
+          No money changes hands. Ever.<br/>
+          Not now, not later, not hidden anywhere.<br/>
+          Just neighbours helping neighbours.
+        </div>
       </div>
     </div>
   );
@@ -593,11 +704,11 @@ function OfferScreen() {
 
 function ProfileScreen({ onNavigate }) {
   const circles=[
-    {l:1,name:"New neighbour",desc:"Just getting started",done:true},
-    {l:2,name:"Known face",desc:"Complete 3 exchanges",done:false},
-    {l:3,name:"Trusted",desc:"Earn 2 vouches",done:false},
-    {l:4,name:"Cornerstone",desc:"10 exchanges · 5 vouches",done:false},
-    {l:5,name:"Pillar",desc:"The neighbourhood knows you",done:false},
+    {l:1,name:"New neighbour",desc:"You have just joined — welcome to the round",done:true},
+    {l:2,name:"Known face",desc:"Complete 3 exchanges with neighbours",done:false},
+    {l:3,name:"Trusted neighbour",desc:"Earn 2 vouches from people you have swapped with",done:false},
+    {l:4,name:"Cornerstone",desc:"10 exchanges and 5 vouches — your street knows you",done:false},
+    {l:5,name:"Pillar",desc:"The whole neighbourhood trusts you",done:false},
   ];
   const activity=[
     {icon:"📷",text:"Maya K. listed a vintage film camera",time:"2h ago",type:"new"},
@@ -607,15 +718,15 @@ function ProfileScreen({ onNavigate }) {
   ];
   return (
     <div style={{flex:1,overflowY:"auto",padding:"14px"}}>
-      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:14,fontFamily:C.mono}}>◎ YOUR PROFILE</div>
+      <div style={{fontSize:9,letterSpacing:3,color:C.chalkD,marginBottom:14,fontFamily:C.mono}}>YOUR PROFILE</div>
       <div style={{background:C.coal,borderRadius:14,padding:20,marginBottom:12}}>
         <div style={{display:"flex",gap:14,alignItems:"center",marginBottom:18}}>
           <Av letter="Y" size={56} flame/>
           <div>
             <div style={{fontSize:20,fontWeight:"bold",color:C.chalk,fontFamily:C.font}}>You</div>
-            <div style={{fontSize:11,color:C.chalkD,marginBottom:6}}>E8 1DY · 2 mile radius</div>
+            <div style={{fontSize:11,color:C.chalkD,marginBottom:6}}>E8 1DY - 2 mile radius</div>
             <Circles level={1}/>
-            <div style={{fontSize:10,color:C.flame,fontFamily:C.mono,marginTop:4}}>Circle 1 · New neighbour</div>
+            <div style={{fontSize:10,color:C.flame,fontFamily:C.mono,marginTop:4}}>Circle 1 - New neighbour</div>
           </div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
@@ -628,7 +739,7 @@ function ProfileScreen({ onNavigate }) {
         </div>
       </div>
       <div style={{background:C.coal,borderRadius:14,padding:16,marginBottom:12}}>
-        <div style={{fontSize:9,letterSpacing:2,color:C.chalkD,marginBottom:14,fontFamily:C.mono}}>YOUR CIRCLES — HOW TRUST IS BUILT</div>
+        <div style={{fontSize:9,letterSpacing:2,color:C.chalkD,marginBottom:14,fontFamily:C.mono}}>HOW YOUR NEIGHBOURS GET TO KNOW YOU</div>
         {circles.map((c,i)=>(
           <div key={c.l}>
             <div style={{display:"flex",alignItems:"center",gap:12,padding:"11px 0",borderBottom:i<circles.length-1?`1px solid ${C.coal2}`:"none",opacity:c.done?1:0.4}}>
@@ -641,7 +752,7 @@ function ProfileScreen({ onNavigate }) {
             </div>
             {i===0&&(
               <div style={{paddingBottom:10,borderBottom:`1px solid ${C.coal2}`}}>
-                <button onClick={()=>onNavigate("browse")} style={{fontSize:11,color:C.flame,fontFamily:C.mono,cursor:"pointer",marginTop:4,display:"inline-block",background:"none",border:"none",padding:0,opacity:1}}>Complete your first exchange →</button>
+                <button onClick={()=>onNavigate("browse")} style={{fontSize:11,color:C.flame,fontFamily:C.mono,cursor:"pointer",marginTop:4,display:"inline-block",background:"none",border:"none",padding:0,opacity:1}}>Find something nearby and make your first swap</button>
               </div>
             )}
           </div>
@@ -661,8 +772,14 @@ function ProfileScreen({ onNavigate }) {
         ))}
       </div>
       <div style={{background:C.coal,borderRadius:14,padding:16,borderLeft:`3px solid ${C.flame}`,marginBottom:4}}>
-        <div style={{fontSize:9,letterSpacing:2,color:C.flame,marginBottom:8,fontFamily:C.mono}}>◎ THE ROUNDABOUT WAY</div>
-        <div style={{fontSize:12,color:C.chalk,lineHeight:2,fontFamily:C.mono}}>No money changes hands. Ever.<br/>Your reputation is your currency.<br/>What goes around, comes around.</div>
+        <div style={{fontSize:9,letterSpacing:2,color:C.flame,marginBottom:8,fontFamily:C.mono}}>THE ROUNDABOUT WAY</div>
+        <div style={{fontSize:12,color:C.chalk,lineHeight:2,fontFamily:C.mono}}>
+          No money changes hands. Ever.<br/>
+          You swap skills, objects, and time.<br/>
+          Your reputation is your currency.<br/>
+          The more you give, the more you get back.<br/>
+          What goes around, comes around.
+        </div>
       </div>
     </div>
   );
@@ -690,7 +807,7 @@ export default function App() {
           <Logo size={34}/>
           <span style={{color:C.chalk,fontSize:18,fontWeight:"bold",fontFamily:C.font,letterSpacing:"-0.5px"}}>round<span style={{color:C.flame}}>about.</span></span>
         </button>
-        <div style={{fontSize:9,color:C.chalkDD,fontFamily:C.mono,letterSpacing:2}}>E8 · 2MI RADIUS</div>
+        <div style={{fontSize:9,color:C.chalkDD,fontFamily:C.mono,letterSpacing:2}}>E8 - 2MI RADIUS</div>
       </header>
       <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
         {detail
